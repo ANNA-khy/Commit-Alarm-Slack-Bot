@@ -10,7 +10,7 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ main ]
-    paths: [ 'Server/**', '.github/workflows/**']
+    paths: [ 'Server/**', '.github/workflows/gradle.yml']
   pull_request:
     branches: [ main ]
 
