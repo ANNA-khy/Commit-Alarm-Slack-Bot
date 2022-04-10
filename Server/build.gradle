@@ -17,6 +17,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'com.slack.api:slack-api-client:1.20.2'
+	implementation 'com.slack.api:bolt-servlet:1.20.2'
 	implementation 'org.kohsuke:github-api:1.301'
 }
 
