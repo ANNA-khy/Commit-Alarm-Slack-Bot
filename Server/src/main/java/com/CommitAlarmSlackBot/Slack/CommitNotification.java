@@ -6,26 +6,34 @@ import com.slack.api.methods.MethodsClient;
 import com.slack.api.methods.SlackApiException;
 import com.slack.api.methods.request.chat.ChatPostMessageRequest;
 import com.slack.api.methods.response.chat.ChatPostMessageResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
+@EnableScheduling
 public class CommitNotification {
 
     private final int minCommit = 1;
-    private final String channelId;
 
-    @Scheduled(cron = "0 0 2 0 * * ?")
+    @Value("${slack.channelID}")
+    private String channelId;
+    @Value("${slack.token}")
+    private String token;
+
+    @Autowired
+    GetCommitCount getCommitCount;
+
+//    @Scheduled(cron = "* * 20 * * ? ")
+    @Scheduled(cron = "*/10 * * * * ? ")
     public void notification() throws SlackApiException, IOException {
         Slack slack = Slack.getInstance();
-
-        String token;
-
-        // Initialize an API Methods client with the given token
         MethodsClient methods = slack.methods(token);
 
-
-        GetCommitCount getCommitCount = new GetCommitCount();
         try {
 
             if (getCommitCount.committed(minCommit)) {
